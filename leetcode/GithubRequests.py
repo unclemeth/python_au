@@ -1,5 +1,4 @@
 import requests
-import json
 GITHUB_TOKEN = 'c2163854c3563d269e23d9deaa1ae247eb1d1182'
 notice = 'Everything is fine'
 notice_1 = 'Title is not suppose to be empty line'
@@ -27,3 +26,38 @@ def get_user_commits(url):
         mes = dict_1.get('message')
         res.append(mes)
     return res
+def check_prefix(title):
+    errors = []
+    if title is None:
+        return notice_1
+    lst = title.split(' ')
+    if len(lst) < 2:
+        return notice_2
+    lst_1 = lst[0].split('-')
+    if lst[1] not in words_of_action:
+        errors.append(notice_7)
+    if len(lst_1) < 2:
+        errors.append(notice_3)
+    else:
+        if lst_1[0] not in project_names:
+            if lst_1[0].upper() not in project_names:
+                errors.append(notice_4)
+        else:
+            errors.append(notice_5)
+    if lst_1[1] not in numbers_of_group:
+        errors.append(notice_6)
+        result = ''
+        for i in errors:
+            result = result+i
+        return result
+def check_requests(username, repos, state='open'):
+    pulls = get_user_pull_request(username, repos, state='open')
+    fin = []
+    for i in pulls:
+        title = i.get('title')
+        title_errors = check_prefix(title)
+        if title_errors == '':
+            title_errors = notice
+            res = 'Title: {}\nVerify_Result: {}'.format(title, title_errors)
+            fin.append(res)
+        return fin
