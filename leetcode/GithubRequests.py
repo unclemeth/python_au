@@ -18,3 +18,12 @@ def get_user_pull_request(username, repos, state='open'):
     url = 'https://api.github.com/repos/{}/{}/pulls?state={}'.format(username, repos, state)
     response = requests.get(url, headers=get_headers())
     return response.json()
+def get_user_commits(url):
+    response = requests.get('{}/commits'.format(url), headers=get_headers())
+    resp = response.json()
+    res = []
+    for j in resp:
+        dict_1 = j.get('commit')
+        mes = dict_1.get('message')
+        res.append(mes)
+    return res
