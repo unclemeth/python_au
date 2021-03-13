@@ -14,3 +14,7 @@ words_of_action = ['Added', 'Fixed', 'Created']
 notice_7 = 'Title is suppose to contain action taken'
 def get_headers():
     return {'Authorization': 'token {}'.format(GITHUB_TOKEN), 'Content-Type': "application/json"}
+def get_user_pull_request(username, repos, state='open'):
+    url = 'https://api.github.com/repos/{}/{}/pulls?state={}'.format(username, repos, state)
+    response = requests.get(url, headers=get_headers())
+    return response.json()
