@@ -1,5 +1,5 @@
 import requests
-GITHUB_TOKEN = 'c2163854c3563d269e23d9deaa1ae247eb1d1182'
+GITHUB_TOKEN = ''
 notice = 'Everything is fine'
 notice_1 = 'Title is not suppose to be empty line'
 notice_2 = 'Title suppose to contain more than 2 words'
